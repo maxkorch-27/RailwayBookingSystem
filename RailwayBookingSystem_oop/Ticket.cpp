@@ -68,3 +68,16 @@ void Ticket::setPrice(int amount)
 {
 	price = amount;
 }
+
+void Ticket::display() const
+{
+	cout << endl << "=============================" << endl;
+	cout << "Ticket " << id<< endl;
+	cout << "Train: " << train->getNumber() << " on " << train->getDate() << endl;
+	cout << "From: " << departureStation.getName() << " (" << departureStation.getDepartureTime() << ")" << endl;
+	cout << "To: " << arrivalStation.getName() << " (" << arrivalStation.getArrivalTime() << ")" << endl;
+	cout << "Coach: " << coach->getNumber() << " (" << coach->getType() << ")" << endl;
+	cout << "Seat: " << seat->getNumber() << endl;
+	cout << "Price: " << price << " euro" << endl;
+	cout << "=============================" << endl << endl;
+}

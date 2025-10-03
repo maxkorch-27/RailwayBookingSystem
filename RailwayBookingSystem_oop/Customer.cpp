@@ -36,13 +36,7 @@ void Customer::showTickets() const
 	cout << "Your tickets:" << endl << "==============";
 	for (auto& ticket : tickets)
 	{
-		cout << endl << "Ticket ID: " << ticket->getId() << "  date: " << ticket->getTrain()->getDate() << endl;
-		cout << "Train " << ticket->getTrain()->getNumber() << ": " << ticket->getDepartureStation().getName()
-			<< "(" << ticket->getDepartureStation().getDepartureTime() << ")" << " -> " << ticket->getArrivalStation().getName()
-			<< "(" << ticket->getArrivalStation().getArrivalTime() << ")" << endl;
-		cout << "Coach: " << ticket->getCoach()->getNumber() << " (" << ticket->getCoach()->getType() << ") "
-			<< " Seat: " << ticket->getSeat()->getNumber() << endl;
-		cout << "==============" << endl;
+		ticket->display();
 	}
 }
 

@@ -4,11 +4,12 @@
 #include "Coach.h"
 #include "Station.h"
 #include "Seat.h"
+#include "IDisplay.h"
 using namespace std;
 
 class Customer;
 
-class Ticket
+class Ticket : public IDisplay
 {
 protected:
 	string id;
@@ -41,4 +42,5 @@ public:
 	void setMoneyReturned(int amount);
 	void setPrice(int amount);
 	virtual int calculatePrice(int routeIndex) const = 0;
+	void display() const override;
 };

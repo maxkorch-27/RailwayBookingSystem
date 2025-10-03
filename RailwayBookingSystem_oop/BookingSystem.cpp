@@ -60,17 +60,10 @@ void BookingSystem::buyTicket(Train& train, Station fromStation, Station toStati
 
     // keep non-owning pointer for customer and move ownership into system vector
     Ticket* rawPtr = uptr.get();
-    tickets.push_back(std::move(uptr));
+    tickets.push_back(move(uptr));
     custPtr->addTicket(rawPtr);
-
-    cout << endl << "==========================" << endl;
-    cout << "Ticket " << ticketId << " booked successfully!" << endl;
-    cout << "From: " << fromStation.getName() << " (" << fromStation.getDepartureTime() << ")" << endl;
-    cout << "To: " << toStation.getName() << " (" << toStation.getArrivalTime() << ")" << endl;
-    cout << "Coach: " << coach.getNumber() << " (" << coach.getType() << ")" << endl;
-    cout << "Seat: " << seat.getNumber() << endl;
-    cout << "Price: " << price << " euro" << endl;
-    cout << "==========================" << endl << endl;
+    cout << "TICKET BOOKED!" << endl;
+	rawPtr->display();
 }
 
 
