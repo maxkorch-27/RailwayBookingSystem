@@ -129,6 +129,7 @@
     <ClInclude Include="Customer.h" />
     <ClInclude Include="EconomyTicket.h" />
     <ClInclude Include="IDisplay.h" />
+    <ClInclude Include="InputValidator.h" />
     <ClInclude Include="Seat.h" />
     <ClInclude Include="Station.h" />
     <ClInclude Include="Ticket.h" />

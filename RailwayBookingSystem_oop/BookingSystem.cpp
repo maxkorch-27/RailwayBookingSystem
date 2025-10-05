@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include "InputValidator.h"
 using namespace std;
 
 BookingSystem::BookingSystem(vector<Train> trains1, vector<Customer> customers1)
@@ -16,9 +17,9 @@ BookingSystem::BookingSystem(vector<Train> trains1, vector<Customer> customers1)
 void BookingSystem::buyTicket(Train& train, Station fromStation, Station toStation, Coach& coach, Seat& seat, int routeIndex)
 {
     cout << "===== buying process =====" << endl << endl;
-    string passportNumber;
-    cout << "Enter your passport number: ";
-    cin >> passportNumber;
+    string passportNumber = InputValidator::getValidatedInput("Enter your passport number (6 digits): ",
+        InputValidator::isValidPassport,
+		"Invalid passport format. Please enter a 6-digit number.");
 
     string ticketId = "T0" + to_string(tickets.size() + 1) + passportNumber;
 
@@ -38,9 +39,9 @@ void BookingSystem::buyTicket(Train& train, Station fromStation, Station toStati
 
     // If new customer, get name and add to customers list
     if (isNewCustomer) {
-        string name;
-        cout << "Enter your name: ";
-        cin >> name;
+        string name = InputValidator::getValidatedInput("Enter your name: ",
+            InputValidator::isValidName, "Incorrect name");
+		cout << "Welcome, " << name << "!" << endl << endl;
 
         customers.emplace_back(passportNumber, name, vector<Ticket*>{});
         custPtr = &customers.back();
@@ -74,6 +75,7 @@ void BookingSystem::searchTickets(string fromStation, string toStation, string d
 
     bool anyFound = false;
 
+	vector <string> availableTrainNumbers;
     // Search for trains matching criteria
     for (auto& train : trains) {
         if (train.getDate() != date) continue;
@@ -104,6 +106,7 @@ void BookingSystem::searchTickets(string fromStation, string toStation, string d
 
         // Display available options
         if (!coachOptions.empty()) {
+			availableTrainNumbers.push_back(train.getNumber());
             cout << "Train " << train.getNumber() << ": "
                 << route[fromIndex].getName() << " (" << route[fromIndex].getDepartureTime() << ")"
                 << " --> "
@@ -126,16 +129,15 @@ void BookingSystem::searchTickets(string fromStation, string toStation, string d
 
     // If options found, prompt for booking
     if (anyFound) {
-        cout << endl << "Do you want to book a ticket? (yes/no)" << endl;
-        string response;
-        cin >> response;
+        string response = InputValidator::getValidatedInput("Do you want to book a ticket? (yes/no): ",
+            InputValidator::isValidYesNo, "Please enter yes or no!");
 
         if (response == "yes")
         {
             // Prompt for train number choice
-            cout << "Enter train number" << endl;
-            string trainNumber;
-            cin >> trainNumber;
+            string trainNumber = InputValidator::getValidatedInput("Enter train number from the above options: ",
+                [&availableTrainNumbers](const string& input) { return InputValidator::isValidTrainNumber(input, availableTrainNumbers); },
+				"Invalid train number. Please choose from the available options.");
             // Auto-assign first available seat in chosen train
             for (auto& train : trains) {
                 if (train.getDate() != date || train.getNumber() != trainNumber) continue;

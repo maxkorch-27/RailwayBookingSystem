@@ -2,6 +2,7 @@
 #include <string>
 #include "BookingSystem.h"
 #include "TrainsData.h"
+#include "InputValidator.h"
 using namespace std;
 
 
@@ -32,36 +33,41 @@ int main()
 				cout << station << " ";
 			cout << endl;
 			string fromStation, toStation, date, coachType;
-			cout << "Enter departure station: ";
-			cin >> fromStation;
-			cout << "Enter arrival station: ";
-			cin >> toStation;
-			cout << "Enter date (DD-MM-YYYY): ";
-			cin >> date;
-			cout << "Enter coach type (Economy/Business): ";
-			cin >> coachType;
+
+			fromStation = InputValidator::getValidatedInput("Enter departure station: ",
+				[&stations](const string& input) { return InputValidator::isValidStation(input, stations); },
+				"No such station in system. Please try again.");
+			toStation = InputValidator::getValidatedInput("Enter arrival station: ",
+				[&stations](const string& input) { return InputValidator::isValidStation(input, stations); },
+				"No such station in system. Please try again.");
+			date = InputValidator::getValidatedInput("Enter travel date (DD-MM-YYYY): ",
+				InputValidator::isValidDate,
+				"Invalid date format. Please use DD-MM-YYYY.");
+			coachType = InputValidator::getValidatedInput("Enter coach type (Economy/Business): ",
+				InputValidator::isValidCoachType,
+				"Invalid coach type. Please enter 'Economy' or 'Business'.");
 
 			bookingSystem.searchTickets(fromStation, toStation, date, coachType); // Search for tickets
 		}
 		else if (choice == "2") // My tickets
 		{
 			// Assuming passport number is used to identify customers
-			cout << "Enter your passport number: ";
-			string passport;
-			cin >> passport;
+			string passport=InputValidator::getValidatedInput("Enter your passport (6 digits): ",
+				InputValidator::isValidPassport,
+				"Invalid passport format. Please enter a 6-digit number.");
 
 			bookingSystem.searchCustomerTickets(passport); // Display customer's tickets
 		}
 		else if (choice == "3") // Return ticket
 		{
 			// Assuming ticket ID is used to identify tickets
-			cout << "Enter your ticket ID: ";
-			string ticketId;
-			cin >> ticketId;
+			string ticketId = InputValidator::getValidatedInput("Enter your ticket ID: ",
+				InputValidator::isValidTicketId,
+				"Invalid ticket ID format. Please use correct ticket ID.");
 
-			string todayDate;
-			cout << "Enter today's date (DD-MM-YYYY): ";
-			cin >> todayDate;
+			string todayDate = InputValidator::getValidatedInput("Enter today's date (DD-MM-YYYY): ",
+				InputValidator::isValidDate,
+				"Invalid date format. Please use DD-MM-YYYY.");
 
 			bookingSystem.returnTicket(ticketId, todayDate); // Process ticket return
 		}
