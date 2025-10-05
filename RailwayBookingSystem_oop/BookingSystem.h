@@ -18,7 +18,7 @@ public:
     BookingSystem(vector<Train> trains1, vector<Customer> customers1);
     void searchTickets(string fromStation, string toStation, string date, string coachType);
     void buyTicket(Train& train, Station fromStation, Station toStation, Coach& coach, Seat& seat, int routeIndex);
-    void returnTicket(const string& ticketId);
+    void returnTicket(const string& ticketId, string today);
     void cashierReport();
     void searchCustomerTickets(const string& passport);
 };

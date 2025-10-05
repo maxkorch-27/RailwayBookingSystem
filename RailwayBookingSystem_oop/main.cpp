@@ -4,6 +4,7 @@
 #include "TrainsData.h"
 using namespace std;
 
+
 int main()
 {
 	// Initialize trains and booking system
@@ -58,7 +59,11 @@ int main()
 			string ticketId;
 			cin >> ticketId;
 
-			bookingSystem.returnTicket(ticketId); // Process ticket return
+			string todayDate;
+			cout << "Enter today's date (DD-MM-YYYY): ";
+			cin >> todayDate;
+
+			bookingSystem.returnTicket(ticketId, todayDate); // Process ticket return
 		}
 		else if (choice == "4") // Cashier report
 		{

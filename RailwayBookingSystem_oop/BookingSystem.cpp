@@ -3,6 +3,7 @@
 #include "BusinessTicket.h"
 #include <iostream>
 #include <string>
+#include <sstream>
 using namespace std;
 
 BookingSystem::BookingSystem(vector<Train> trains1, vector<Customer> customers1)
@@ -180,7 +181,39 @@ void BookingSystem::searchCustomerTickets(const string& passport)
     cout << "Customer with passport " << passport << " not found." << endl;
 }
 
-void BookingSystem::returnTicket(const string& ticketId) {
+int daysBetween(const string& today, const string& trip)
+{
+    int d1, m1, y1;
+    int d2, m2, y2;
+    char sep;
+
+    stringstream ss1(today);
+    ss1 >> d1 >> sep >> m1 >> sep >> y1;
+
+    stringstream ss2(trip);
+    ss2 >> d2 >> sep >> m2 >> sep >> y2;
+
+    int daysInMonth[] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+
+    auto daysFromStart = [&](int d, int m, int y) {
+        int total = y * 365;
+        for (int i = 0; i < m - 1; ++i)
+            total += daysInMonth[i];
+        total += d;
+        return total;
+        };
+
+    int totalToday = daysFromStart(d1, m1, y1);
+    int totalTrip = daysFromStart(d2, m2, y2);
+
+    if (totalTrip >= totalToday)
+        return totalTrip - totalToday;
+    else
+        return -1; // Invalid case: trip date is before today's date
+}
+
+
+void BookingSystem::returnTicket(const string& ticketId, string today) {
     // Search for ticket by ID
     for (auto it = tickets.begin(); it != tickets.end(); ++it) {
         if ((*it)->getId() == ticketId) {
@@ -190,26 +223,12 @@ void BookingSystem::returnTicket(const string& ticketId) {
                 return;
             }
 
-            // Calculate penalty and refund
-            int daysBefore;
-            //Check for valid input
-            while (true) {
-                cout << "Enter number of days before trip: ";
-                cin >> daysBefore;
+			int daysBefore = daysBetween(today, ticket.getTrain()->getDate());
+            if (daysBefore == -1) {
+                cout << "Invalid return date. Return date is after trip date." << endl;
+                return;
+			}
 
-                if (cin.fail()) {
-                    cin.clear();
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n');// Clear error state
-                    cout << "Invalid input! Please enter a number." << endl;
-                }
-                else {
-                    if (daysBefore < 0) {
-                        cout << "Number of days cannot be negative. Please try again." << endl;
-                        continue;
-                    }
-                    break;
-                }
-            }
             double penaltyRate = 0.0;
             if (daysBefore >= 30) penaltyRate = 0.01;
             else if (daysBefore >= 15) penaltyRate = 0.05;
