@@ -1,6 +1,7 @@
 ﻿#include "BookingSystem.h"
 #include "EconomyTicket.h"
 #include "BusinessTicket.h"
+#include "Report.h"
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -265,9 +266,12 @@ void BookingSystem::returnTicket(const string& ticketId, string today) {
             ticket.setStatus("cancelled");
             ticket.setMoneyReturned(refund);
             // Display cancellation details
-            cout << endl << "Ticket " << ticketId << " cancelled." << endl;
+			cout << endl<< "========================" << endl;
+            cout << "Ticket " << ticketId << " cancelled." << endl;
+			cout << "Days before trip: " << daysBefore << endl;
             cout << "Penalty: " << (penaltyRate * 100) << "%" << endl;
             cout << "Refund: " << refund << " euro" << endl;
+			cout << "========================" << endl << endl;
             return;
         }
     }
@@ -277,33 +281,5 @@ void BookingSystem::returnTicket(const string& ticketId, string today) {
 
 void BookingSystem::cashierReport()
 {
-    int totalSold = 0;
-    int totalPrice = 0;
-    int totalCancelled = 0;
-    int totalRefund = 0;
-    int totalRevenue = 0;
-    // Calculate totals for sold tickets, cancellations, refunds, and revenue
-    for (auto& ticket : tickets)
-    {
-        if (ticket->getStatus() == "booked")
-        {
-            totalSold++;
-            totalPrice += ticket->getPrice();
-        }
-        else if (ticket->getStatus() == "cancelled")
-        {
-            totalSold++;
-            totalCancelled++;
-            totalPrice += ticket->getPrice();
-            totalRefund += ticket->getMoneyReturned();
-        }
-    }
-    totalRevenue = totalPrice - totalRefund;
-    cout << endl << "===== Cashier Report =====" << endl;
-    cout << "Total tickets sold: " << totalSold << endl;
-    cout << "Total sales amount: " << totalPrice << " euro" << endl;
-    cout << "Total tickets cancelled: " << totalCancelled << endl;
-    cout << "Total refund amount: " << totalRefund << " euro" << endl;
-    cout << "TOTAL REVENUE: " << totalRevenue << " euro" << endl;
-    cout << "==========================" << endl;
+	Report::generateReport(tickets);
 }

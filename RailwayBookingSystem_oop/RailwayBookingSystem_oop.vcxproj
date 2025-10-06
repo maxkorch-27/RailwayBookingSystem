@@ -130,6 +130,7 @@
     <ClInclude Include="EconomyTicket.h" />
     <ClInclude Include="IDisplay.h" />
     <ClInclude Include="InputValidator.h" />
+    <ClInclude Include="Report.h" />
     <ClInclude Include="Seat.h" />
     <ClInclude Include="Station.h" />
     <ClInclude Include="Ticket.h" />
@@ -141,6 +142,7 @@
     <ClCompile Include="Coach.cpp" />
     <ClCompile Include="Customer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Report.cpp" />
     <ClCompile Include="Seat.cpp" />
     <ClCompile Include="Station.cpp" />
     <ClCompile Include="Ticket.cpp" />
