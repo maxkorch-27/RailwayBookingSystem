@@ -9,7 +9,7 @@ using namespace std;
 int main()
 {
 	// Initialize trains and booking system
-	vector<Train> trains = createTrains();
+	vector<Train> trains = loadTrainsFromCSV("trains.csv", "stations.csv", "coaches.csv");
 	vector<string> stations = getAllStations(trains);
 	BookingSystem bookingSystem(trains, {});
 

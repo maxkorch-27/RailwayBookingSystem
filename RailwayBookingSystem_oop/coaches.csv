@@ -1,0 +1,13 @@
+train_number,coach_number,type
+101,1,Economy
+101,2,Economy
+101,3,Business
+101,4,Business
+202,1,Economy
+202,2,Economy
+202,3,Business
+202,4,Business
+303,1,Economy
+303,2,Economy
+303,3,Business
+303,4,Business

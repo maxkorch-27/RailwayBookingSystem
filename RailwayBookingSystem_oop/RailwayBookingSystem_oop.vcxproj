@@ -149,6 +149,11 @@
     <ClCompile Include="Train.cpp" />
     <ClCompile Include="TrainsData.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="coaches.csv" />
+    <None Include="stations.csv" />
+    <None Include="trains.csv" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

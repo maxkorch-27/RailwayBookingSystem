@@ -1,0 +1,10 @@
+train_number,date,route_name
+101,01-10-2025,Tallinn-Tartu
+101,02-10-2025,Tallinn-Tartu
+101,03-10-2025,Tallinn-Tartu
+202,01-10-2025,Tallinn-Narva
+202,02-10-2025,Tallinn-Narva
+202,03-10-2025,Tallinn-Narva
+303,01-10-2025,Tallinn-Paldiski
+303,02-10-2025,Tallinn-Paldiski
+303,03-10-2025,Tallinn-Paldiski

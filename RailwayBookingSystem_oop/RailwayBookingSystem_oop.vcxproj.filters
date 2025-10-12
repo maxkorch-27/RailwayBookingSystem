@@ -87,4 +87,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="trains.csv" />
+    <None Include="stations.csv" />
+    <None Include="coaches.csv" />
+  </ItemGroup>
 </Project>
