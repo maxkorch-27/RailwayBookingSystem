@@ -15,6 +15,11 @@ BookingSystem::BookingSystem(vector<Train> trains1, vector<Customer> customers1)
     // tickets starts empty
 }
 
+vector<Train>& BookingSystem::getTrains()
+{
+    return trains;
+}
+
 void BookingSystem::buyTicket(Train& train, Station fromStation, Station toStation, Coach& coach, Seat& seat, int routeIndex)
 {
     Ticket::create(customers, tickets, train, fromStation, toStation, coach, seat, routeIndex);
@@ -166,67 +171,17 @@ int daysBetween(const string& today, const string& trip)
 }
 
 
-void BookingSystem::returnTicket(const string& ticketId, string today) {
-    // Search for ticket by ID
-    for (auto it = tickets.begin(); it != tickets.end(); ++it) {
-        if ((*it)->getId() == ticketId) {
-            Ticket& ticket = *(*it);
-            if (ticket.getStatus() == "cancelled") {
-                cout << "Ticket already cancelled." << endl;
-                return;
-            }
-
-			int daysBefore = daysBetween(today, ticket.getTrain()->getDate());
-            if (daysBefore == -1) {
-                cout << "Invalid return date. Return date is after trip date." << endl;
-                return;
-			}
-
-            double penaltyRate = 0.0;
-            if (daysBefore >= 30) penaltyRate = 0.01;
-            else if (daysBefore >= 15) penaltyRate = 0.05;
-            else if (daysBefore >= 3)  penaltyRate = 0.10;
-            else penaltyRate = 0.30;
-
-            int refund = static_cast<int>(ticket.getPrice() * (1.0 - penaltyRate));
-
-            // Free up the reserved seat
-            const vector<Station>& route = ticket.getTrain()->getRoute();
-            int fromIndex = -1, toIndex = -1;
-            for (int i = 0; i < route.size(); i++) {
-                if (route[i].getName() == ticket.getDepartureStation().getName()) fromIndex = i;
-                if (route[i].getName() == ticket.getArrivalStation().getName())   toIndex = i;
-            }
-            if (fromIndex != -1 && toIndex != -1) {
-                for (auto& coach : ticket.getTrain()->getCoaches()) {
-                    if (coach.getNumber() == ticket.getCoach()->getNumber()) {
-                        for (auto& seat : coach.getSeats()) {
-                            if (seat.getNumber() == ticket.getSeat()->getNumber()) {
-                                seat.removeReservation(fromIndex, toIndex);
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            // Remove ticket from customer's list
-            Customer* cust = ticket.getCustomer();
-            if (cust)
-                cust->removeTicket(ticketId);
-            ticket.setStatus("cancelled");
-            ticket.setMoneyReturned(refund);
-            // Display cancellation details
-			cout << endl<< "========================" << endl;
-            cout << "Ticket " << ticketId << " cancelled." << endl;
-			cout << "Days before trip: " << daysBefore << endl;
-            cout << "Penalty: " << (penaltyRate * 100) << "%" << endl;
-            cout << "Refund: " << refund << " euro" << endl;
-			cout << "========================" << endl << endl;
+void BookingSystem::returnTicket(const string& ticketId, string today) 
+{
+    for (auto& uptr : tickets)
+    {
+        if (uptr->getId() == ticketId)
+        {
+			uptr->cancel(today);
             return;
         }
     }
-    // If ticket not found
-    cout << "Ticket with ID " << ticketId << " not found." << endl;
+	cout << "Ticket with ID " << ticketId << " not found." << endl;
 }
 
 void BookingSystem::cashierReport()

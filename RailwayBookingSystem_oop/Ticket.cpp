@@ -5,6 +5,8 @@
 #include "BusinessTicket.h"
 #include "InputValidator.h"
 #include "Customer.h"
+#include <sstream>
+#include "Station.h"
 using namespace std;
 Ticket::Ticket(string id1, Train* train1, Customer* customer1, Station departureStation1, Station arrivalStation1, Coach* coach1, Seat* seat1, int price1, string status1, int moneyReturned1)
 {
@@ -126,6 +128,78 @@ void Ticket::create(vector<Customer>& customers, vector <unique_ptr<Ticket>>& ti
     custPtr->addTicket(rawPtr);
     cout << "TICKET BOOKED!" << endl;
     rawPtr->display();
+}
+
+bool Ticket::cancel(const string& today)
+{
+    if (status == "cancelled") {
+        cout << "Ticket already cancelled." << endl;
+        return false;
+    }
+
+    // parse dates
+    int d1, m1, y1, d2, m2, y2;
+    char sep;
+    string tripDate = train->getDate();
+
+    stringstream ss1(today);
+    ss1 >> d1 >> sep >> m1 >> sep >> y1;
+
+    stringstream ss2(tripDate);
+    ss2 >> d2 >> sep >> m2 >> sep >> y2;
+
+    int daysInMonth[] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+    auto daysFromStart = [&](int d, int m, int y) 
+        {
+        int total = y * 365;
+        for (int i = 0; i < m - 1; ++i)
+            total += daysInMonth[i];
+        total += d;
+        return total;
+        };
+
+    int totalToday = daysFromStart(d1, m1, y1);
+    int totalTrip = daysFromStart(d2, m2, y2);
+    int daysBefore = totalTrip - totalToday;
+
+    if (daysBefore < 0) {
+        cout << "Invalid return date. Trip already passed." << endl;
+        return false;
+    }
+
+    // Calculate penalty
+    double penaltyRate = 0.0;
+    if (daysBefore >= 30) penaltyRate = 0.01;
+    else if (daysBefore >= 15) penaltyRate = 0.05;
+    else if (daysBefore >= 3)  penaltyRate = 0.10;
+    else penaltyRate = 0.30;
+
+    int refund = static_cast<int>(price * (1.0 - penaltyRate));
+
+    // free seat
+    const vector<Station>& route = train->getRoute();
+    int fromIndex = -1, toIndex = -1;
+    for (int i = 0; i < route.size(); i++) {
+        if (route[i].getName() == departureStation.getName()) fromIndex = i;
+        if (route[i].getName() == arrivalStation.getName())   toIndex = i;
+    }
+
+    if (fromIndex != -1 && toIndex != -1)
+        seat->removeReservation(fromIndex, toIndex);
+
+    // mark cancelled
+    status = "cancelled";
+    moneyReturned = refund;
+    customer->removeTicket(id);
+
+    cout << endl << "===== TICKET CANCELLED =====" << endl;
+    cout << "Ticket ID: " << id << endl;
+    cout << "Days before trip: " << daysBefore << endl;
+    cout << "Penalty: " << (penaltyRate * 100) << "%" << endl;
+    cout << "Refund: " << refund << " euro" << endl;
+    cout << "=============================" << endl;
+
+    return true;
 }
 
 void Ticket::display() const

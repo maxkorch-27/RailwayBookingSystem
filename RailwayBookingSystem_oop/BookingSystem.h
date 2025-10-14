@@ -16,6 +16,7 @@ private:
 
 public:
     BookingSystem(vector<Train> trains1, vector<Customer> customers1);
+    vector<Train>& getTrains();
     void searchTickets(string fromStation, string toStation, string date, string coachType);
     void buyTicket(Train& train, Station fromStation, Station toStation, Coach& coach, Seat& seat, int routeIndex);
     void returnTicket(const string& ticketId, string today);

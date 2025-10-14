@@ -126,6 +126,7 @@
     <ClInclude Include="BookingSystem.h" />
     <ClInclude Include="BusinessTicket.h" />
     <ClInclude Include="Coach.h" />
+    <ClInclude Include="ConsoleUI.h" />
     <ClInclude Include="Customer.h" />
     <ClInclude Include="EconomyTicket.h" />
     <ClInclude Include="IDisplay.h" />
@@ -140,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="BookingSystem.cpp" />
     <ClCompile Include="Coach.cpp" />
+    <ClCompile Include="ConsoleUI.cpp" />
     <ClCompile Include="Customer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Report.cpp" />

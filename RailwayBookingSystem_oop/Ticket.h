@@ -39,6 +39,7 @@ public:
 	int getPrice() const;
 	string getStatus() const;
 	static void create(vector<Customer>& customers, vector <unique_ptr<Ticket>>& tickets, Train& train, Station fromStation, Station toStation, Coach& coach, Seat& seat, int routeIndex);
+	bool cancel(const string& today);
 	void setStatus(const string& newStatus);
 	int getMoneyReturned() const;
 	void setMoneyReturned(int amount);
