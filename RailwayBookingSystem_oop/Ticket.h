@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include <string>
 #include "Train.h"
 #include "Coach.h"
@@ -37,6 +38,7 @@ public:
 	Seat* getSeat() const;
 	int getPrice() const;
 	string getStatus() const;
+	static void create(vector<Customer>& customers, vector <unique_ptr<Ticket>>& tickets, Train& train, Station fromStation, Station toStation, Coach& coach, Seat& seat, int routeIndex);
 	void setStatus(const string& newStatus);
 	int getMoneyReturned() const;
 	void setMoneyReturned(int amount);
