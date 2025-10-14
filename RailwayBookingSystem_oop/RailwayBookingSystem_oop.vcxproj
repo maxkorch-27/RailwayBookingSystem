@@ -131,6 +131,7 @@
     <ClInclude Include="EconomyTicket.h" />
     <ClInclude Include="IDisplay.h" />
     <ClInclude Include="InputValidator.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="Report.h" />
     <ClInclude Include="Seat.h" />
     <ClInclude Include="Station.h" />
@@ -144,6 +145,7 @@
     <ClCompile Include="ConsoleUI.cpp" />
     <ClCompile Include="Customer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Report.cpp" />
     <ClCompile Include="Seat.cpp" />
     <ClCompile Include="Station.cpp" />

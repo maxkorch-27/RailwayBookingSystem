@@ -2,6 +2,7 @@
 #include "InputValidator.h"
 #include <iostream>
 #include "TrainsData.h"
+#include "Menu.h"
 using namespace std;
 
 ConsoleUI::ConsoleUI(BookingSystem& bs) : system(bs) {}
@@ -12,12 +13,13 @@ void ConsoleUI::run()
 	cout << "Hello, customer. This is Railway booking system" << endl;
 	do
 	{
-		cout << endl << "====== MENU  ======" << endl;
-		cout << "1. Searching and Buying tickets" << endl;
-		cout << "2. My tickets" << endl;
-		cout << "3. Return ticket" << endl;
-		cout << "4. Cashier report" << endl;
-		cout << "0. Exit" << endl << endl;
+		Menu menu({
+			"Search and Buy tickets",
+			"My tickets",
+			"Return ticket",
+			"Cashier report"
+			});
+		menu.display();
 		cout << "Enter your choice: ";
 		cin >> choice;
 		if (choice == "1") // Search and Buy tickets
