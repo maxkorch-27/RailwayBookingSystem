@@ -10,7 +10,7 @@ using namespace std;
 int main()
 {
 	// Initialize trains and booking system
-	vector<Train> trains = DatabaseManager::loadTrainsFromCSV("trains.csv", "stations.csv", "coaches.csv");
+	vector<Train> trains = DatabaseManager::loadTrains("trains.csv", "stations.csv", "coaches.csv");
 	BookingSystem bookingSystem(trains, "customers.csv", "tickets.csv");
 	ConsoleUI ui(bookingSystem);
 	ui.run();

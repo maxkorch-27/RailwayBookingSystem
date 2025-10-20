@@ -2,12 +2,14 @@
 #include <vector>
 #include <string>
 #include "IDisplay.h"
+using namespace std;
+
 class Menu : public IDisplay
 {
 	private:
-		std::vector<std::string> options;
+		vector<string> options;
 	public:
-		Menu(const std::vector<std::string>& opts);
+		Menu(const vector<string>& opts);
 		void display() const override;
 };
 

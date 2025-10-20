@@ -23,8 +23,3 @@ vector<Seat>& Coach::getSeats()
 {
 	return seats;
 }
-
-void Coach::addSeat(Seat seat)
-{
-	seats.push_back(seat);
-}

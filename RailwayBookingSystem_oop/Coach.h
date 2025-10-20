@@ -16,6 +16,4 @@ public:
 	string getNumber();
 	string getType();
 	vector<Seat>& getSeats();
-	void addSeat(Seat seat);
-
 };

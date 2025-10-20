@@ -12,7 +12,7 @@
 #include "BusinessTicket.h"
 using namespace std;
 
-vector<Train> DatabaseManager::loadTrainsFromCSV(const string& trainsFile, const string& stationsFile, const string& coachesFile)
+vector<Train> DatabaseManager::loadTrains(const string& trainsFile, const string& stationsFile, const string& coachesFile)
 {
     vector<Train> trains;
     unordered_map<string, vector<Station>> trainStations;
