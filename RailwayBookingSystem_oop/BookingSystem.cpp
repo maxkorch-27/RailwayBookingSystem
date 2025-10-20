@@ -151,38 +151,6 @@ void BookingSystem::searchCustomerTickets(const string& passport)
     cout << "Customer with passport " << passport << " not found." << endl;
 }
 
-int daysBetween(const string& today, const string& trip)
-{
-    int d1, m1, y1;
-    int d2, m2, y2;
-    char sep;
-
-    stringstream ss1(today);
-    ss1 >> d1 >> sep >> m1 >> sep >> y1;
-
-    stringstream ss2(trip);
-    ss2 >> d2 >> sep >> m2 >> sep >> y2;
-
-    int daysInMonth[] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
-
-    auto daysFromStart = [&](int d, int m, int y) {
-        int total = y * 365;
-        for (int i = 0; i < m - 1; ++i)
-            total += daysInMonth[i];
-        total += d;
-        return total;
-        };
-
-    int totalToday = daysFromStart(d1, m1, y1);
-    int totalTrip = daysFromStart(d2, m2, y2);
-
-    if (totalTrip >= totalToday)
-        return totalTrip - totalToday;
-    else
-        return -1; // Invalid case: trip date is before today's date
-}
-
-
 void BookingSystem::returnTicket(const string& ticketId, string today) 
 {
     for (auto& uptr : tickets)
