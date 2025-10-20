@@ -1,7 +1,7 @@
 #include "ConsoleUI.h"
 #include "InputValidator.h"
 #include <iostream>
-#include "TrainsData.h"
+#include "DatabaseManager.h"
 #include "Menu.h"
 using namespace std;
 
@@ -43,12 +43,13 @@ void ConsoleUI::run()
 			cout << "Invalid choice. Please try again." << endl;
 		}
 	} while (choice != "0");
+	system.saveAll();
 	cout << "Thank you for using the Railway booking system. Goodbye!" << endl;
 }
 
 void ConsoleUI::handleSearchAndBuy()
 {
-	vector<string> stations = getAllStations(system.getTrains());
+	vector<string> stations = DatabaseManager::getAllStations(system.getTrains());
 	cout << "Available stations: " << endl; // Display all available stations
 	for (auto& station : stations)
 		cout << station << " ";

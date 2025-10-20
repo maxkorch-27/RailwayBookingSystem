@@ -6,13 +6,25 @@
 #include <string>
 #include <sstream>
 #include "InputValidator.h"
+#include "DatabaseManager.h"
 using namespace std;
 
-BookingSystem::BookingSystem(vector<Train> trains1, vector<Customer> customers1)
+BookingSystem::BookingSystem(vector<Train> trains1, const string& customersFile, const string& ticketsFile)
 {
     trains = std::move(trains1);
-    customers = std::move(customers1);
-    // tickets starts empty
+    try {
+        customers = DatabaseManager::loadCustomers(customersFile);
+    }
+    catch (const exception& e) {
+        cerr << "Error loading customers: " << e.what() << endl;
+    }
+
+    try {
+    tickets = DatabaseManager::loadTickets(ticketsFile, customers, trains);
+    }
+    catch (const exception& e) {
+        cerr << "Error loading tickets: " << e.what() << endl;
+    }
 }
 
 vector<Train>& BookingSystem::getTrains()
@@ -187,4 +199,12 @@ void BookingSystem::returnTicket(const string& ticketId, string today)
 void BookingSystem::cashierReport()
 {
 	Report::generateReport(tickets);
+}
+
+void BookingSystem::saveAll()
+{
+    try { DatabaseManager::saveTickets("tickets.csv", tickets); }
+    catch (const std::exception& e) { cerr << "saveTickets failed: " << e.what() << endl; }
+    try { DatabaseManager::saveCustomers("customers.csv", customers); }
+	catch (const std::exception& e) { cerr << "saveCustomers failed: " << e.what() << endl; }
 }

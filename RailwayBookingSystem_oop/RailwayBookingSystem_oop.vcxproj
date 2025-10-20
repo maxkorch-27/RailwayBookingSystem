@@ -137,7 +137,7 @@
     <ClInclude Include="Station.h" />
     <ClInclude Include="Ticket.h" />
     <ClInclude Include="Train.h" />
-    <ClInclude Include="TrainsData.h" />
+    <ClInclude Include="DatabaseManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BookingSystem.cpp" />
@@ -151,11 +151,13 @@
     <ClCompile Include="Station.cpp" />
     <ClCompile Include="Ticket.cpp" />
     <ClCompile Include="Train.cpp" />
-    <ClCompile Include="TrainsData.cpp" />
+    <ClCompile Include="DatabaseManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="coaches.csv" />
+    <None Include="customers.csv" />
     <None Include="stations.csv" />
+    <None Include="tickets.csv" />
     <None Include="trains.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

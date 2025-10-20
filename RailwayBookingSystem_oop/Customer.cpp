@@ -36,7 +36,8 @@ void Customer::showTickets() const
 	cout << "Your tickets:" << endl << "==============";
 	for (auto& ticket : tickets)
 	{
-		ticket->display();
+		if (ticket->getStatus() != "cancelled")
+			ticket->display();
 	}
 }
 

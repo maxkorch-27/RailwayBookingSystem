@@ -14,6 +14,7 @@ class Ticket : public IDisplay
 {
 protected:
 	string id;
+	string customerPassport;
 	Train* train;
 	Customer* customer;
 	Station departureStation;
@@ -32,6 +33,7 @@ public:
 	string getId() const;
 	Train* getTrain() const;
 	Customer* getCustomer() const;
+	string getCustomerPassport() const;
 	Station getDepartureStation() const;
 	Station getArrivalStation() const;
 	Coach* getCoach() const;
@@ -41,6 +43,8 @@ public:
 	static void create(vector<Customer>& customers, vector <unique_ptr<Ticket>>& tickets, Train& train, Station fromStation, Station toStation, Coach& coach, Seat& seat, int routeIndex);
 	bool cancel(const string& today);
 	void setStatus(const string& newStatus);
+	void setCustomerPassport(const string& passport);
+	void setCustomer(Customer* c);
 	int getMoneyReturned() const;
 	void setMoneyReturned(int amount);
 	void setPrice(int amount);

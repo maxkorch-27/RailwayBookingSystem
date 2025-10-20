@@ -42,7 +42,7 @@
     <ClInclude Include="BusinessTicket.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TrainsData.h">
+    <ClInclude Include="DatabaseManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IDisplay.h">
@@ -83,7 +83,7 @@
     <ClCompile Include="Train.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TrainsData.cpp">
+    <ClCompile Include="DatabaseManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
@@ -103,5 +103,7 @@
     <None Include="trains.csv" />
     <None Include="stations.csv" />
     <None Include="coaches.csv" />
+    <None Include="customers.csv" />
+    <None Include="tickets.csv" />
   </ItemGroup>
 </Project>

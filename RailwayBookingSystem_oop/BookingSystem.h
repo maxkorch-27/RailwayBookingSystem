@@ -15,11 +15,12 @@ private:
     vector<unique_ptr<Ticket>> tickets;
 
 public:
-    BookingSystem(vector<Train> trains1, vector<Customer> customers1);
+    BookingSystem(vector<Train> trains1, const string& customersFile, const string& ticketsFile);
     vector<Train>& getTrains();
     void searchTickets(string fromStation, string toStation, string date, string coachType);
     void buyTicket(Train& train, Station fromStation, Station toStation, Coach& coach, Seat& seat, int routeIndex);
     void returnTicket(const string& ticketId, string today);
     void cashierReport();
     void searchCustomerTickets(const string& passport);
+    void saveAll();
 };

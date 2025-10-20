@@ -8,18 +8,23 @@
 #include <sstream>
 #include "Station.h"
 using namespace std;
-Ticket::Ticket(string id1, Train* train1, Customer* customer1, Station departureStation1, Station arrivalStation1, Coach* coach1, Seat* seat1, int price1, string status1, int moneyReturned1)
+
+Ticket::Ticket(string id1, Train* train1, Customer* customer1, Station departureStation1,
+    Station arrivalStation1, Coach* coach1, Seat* seat1, int price1,
+    string status1, int moneyReturned1)
 {
-	id = id1;
-	train = train1;
-	customer = customer1;
-	departureStation = departureStation1;
-	arrivalStation = arrivalStation1;
-	coach = coach1;
-	seat = seat1;
-	price = price1;
-	status = status1;
-	moneyReturned = moneyReturned1;
+    id = id1;
+    train = train1;
+    customer = customer1;
+    departureStation = departureStation1;
+    arrivalStation = arrivalStation1;
+    coach = coach1;
+    seat = seat1;
+    price = price1;
+    status = status1;
+    moneyReturned = moneyReturned1;
+
+    customerPassport = (customer ? customer->getPassport() : "");
 }
 
 // Getters and Setters
@@ -35,6 +40,12 @@ Customer* Ticket::getCustomer() const
 {
 	return customer;
 }
+
+string Ticket::getCustomerPassport() const
+{
+    return customerPassport;
+}
+
 Station Ticket::getDepartureStation() const
 {
 	return departureStation;
@@ -74,6 +85,17 @@ void Ticket::setMoneyReturned(int amount)
 void Ticket::setPrice(int amount)
 {
 	price = amount;
+}
+
+void Ticket::setCustomer(Customer* c)
+{
+    customer = c;
+    if (c) customerPassport = c->getPassport();
+}
+
+void Ticket::setCustomerPassport(const string& passport)
+{
+    customerPassport = passport;
 }
 
 void Ticket::create(vector<Customer>& customers, vector <unique_ptr<Ticket>>& tickets, Train& train, Station fromStation, Station toStation, Coach& coach, Seat& seat, int routeIndex)
