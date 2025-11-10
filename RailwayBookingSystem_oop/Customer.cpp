@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "Ticket.h"
+#include "PerformanceTimer.h"
 using namespace std;
 
 Customer::Customer(string passport1, string name1, vector<Ticket*> tickets1)
@@ -27,6 +28,8 @@ void Customer::addTicket(Ticket* ticket)
 }
 void Customer::showTickets() const
 {
+	PerformanceTimer timer("Show Customer Tickets");
+
 	// Display all tickets for this customer
 	if (tickets.empty())
 	{

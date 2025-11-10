@@ -1,4 +1,5 @@
 #include "Report.h"
+#include "PerformanceTimer.h"
 using namespace std;
 
 Report::Report(int sold, int price, int cancelled, int refund, int revenue)
@@ -19,6 +20,8 @@ void Report::display() const
 
 void Report::generateReport(const vector<unique_ptr<Ticket>>& tickets)
 {
+	PerformanceTimer timer("Generate Cashier Report");
+
 	Report report(0, 0, 0, 0, 0);
 	for (auto& ticket : tickets)
 	{

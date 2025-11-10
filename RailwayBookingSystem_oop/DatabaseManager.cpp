@@ -10,10 +10,15 @@
 #include "Ticket.h"
 #include "EconomyTicket.h"
 #include "BusinessTicket.h"
+#include "PerformanceTimer.h"
 using namespace std;
+
+const int SEATS_PER_COACH = 10;
 
 vector<Train> DatabaseManager::loadTrains(const string& trainsFile, const string& stationsFile, const string& coachesFile)
 {
+	PerformanceTimer timer("Loading Trains");
+
     vector<Train> trains;
     unordered_map<string, vector<Station>> trainStations;
     unordered_map<string, vector<Coach>> trainCoaches;
@@ -45,7 +50,7 @@ vector<Train> DatabaseManager::loadTrains(const string& trainsFile, const string
         getline(ss, type, ',');
 
         vector<Seat> seats;
-        for (int i = 1; i <= 10; ++i)
+        for (int i = 1; i <= SEATS_PER_COACH; ++i)
             seats.emplace_back(to_string(i));
         trainCoaches[trainNum].emplace_back(coachNum, type, seats);
     }
@@ -81,6 +86,8 @@ vector<string> DatabaseManager::getAllStations(const vector<Train>& trains)
 }
 
 vector<Customer> DatabaseManager::loadCustomers(const string& filename) {
+	PerformanceTimer timer("Loading Customers");
+
     vector<Customer> customers;
     ifstream file(filename);
     if (!file.is_open()) return customers;
@@ -99,6 +106,8 @@ vector<Customer> DatabaseManager::loadCustomers(const string& filename) {
 }
 
 void DatabaseManager::saveCustomers(const string& filename, const vector<Customer>& customers) {
+	PerformanceTimer timer("Saving Customers");
+
     ofstream file(filename);
     if (!file.is_open()) return;
     file << "passport,name\n";
@@ -109,6 +118,8 @@ void DatabaseManager::saveCustomers(const string& filename, const vector<Custome
 vector<unique_ptr<Ticket>> DatabaseManager::loadTickets(
     const string& filename, vector<Customer>& customers, vector<Train>& trains)
 {
+	PerformanceTimer timer("Loading Tickets");
+
     vector<unique_ptr<Ticket>> tickets;
     ifstream file(filename);
     if (!file.is_open()) return tickets;
@@ -199,6 +210,8 @@ vector<unique_ptr<Ticket>> DatabaseManager::loadTickets(
 
 void DatabaseManager::saveTickets(const string& filename, const vector<unique_ptr<Ticket>>& tickets)
 {
+	PerformanceTimer timer("Saving Tickets");
+
     ofstream file(filename);
     if (!file.is_open()) return;
 

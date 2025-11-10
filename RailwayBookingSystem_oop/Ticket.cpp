@@ -7,6 +7,7 @@
 #include "Customer.h"
 #include <sstream>
 #include "Station.h"
+#include "PerformanceTimer.h"
 using namespace std;
 
 Ticket::Ticket(string id1, Train* train1, Customer* customer1, Station departureStation1,
@@ -131,6 +132,8 @@ void Ticket::create(vector<Customer>& customers, vector <unique_ptr<Ticket>>& ti
         custPtr = &customers.back();
     }
 
+	PerformanceTimer timer("Ticket Creation");
+
     // create proper concrete Ticket and push into unique_ptr vector
     unique_ptr<Ticket> uptr;
     if (coach.getType() == "Business") {
@@ -152,8 +155,17 @@ void Ticket::create(vector<Customer>& customers, vector <unique_ptr<Ticket>>& ti
     rawPtr->display();
 }
 
+
+const double PENALTY_DAYS_30 = 0.01;
+const double PENALTY_DAYS_15 = 0.05;
+const double PENALTY_DAYS_3 = 0.10;
+const double PENALTY_LESS_3 = 0.30;
+
+
 bool Ticket::cancel(const string& today)
 {
+	PerformanceTimer timer("Ticket Cancellation");
+
     if (status == "cancelled") {
         cout << "Ticket already cancelled." << endl;
         return false;
@@ -191,10 +203,18 @@ bool Ticket::cancel(const string& today)
 
     // Calculate penalty
     double penaltyRate = 0.0;
-    if (daysBefore >= 30) penaltyRate = 0.01;
-    else if (daysBefore >= 15) penaltyRate = 0.05;
-    else if (daysBefore >= 3)  penaltyRate = 0.10;
-    else penaltyRate = 0.30;
+    if (daysBefore > 30) {
+        penaltyRate = PENALTY_DAYS_30;
+    }
+    else if (daysBefore > 15) {
+        penaltyRate = PENALTY_DAYS_15;
+    }
+    else if (daysBefore > 3) {
+        penaltyRate = PENALTY_DAYS_3;
+    }
+    else {
+        penaltyRate = PENALTY_LESS_3;
+	}
 
     int refund = static_cast<int>(price * (1.0 - penaltyRate));
 

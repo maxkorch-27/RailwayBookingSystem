@@ -4,4 +4,6 @@ T02654321,654321,101,02-10-2025,Tallinn,Tapa,06:15,07:25,1,2,Economy,20,0,booked
 T03123456,123456,303,03-10-2025,Tallinn,Laagri,17:45,18:05,3,1,Business,25,0,booked
 T04000000,000000,303,03-10-2025,Tallinn,Paldiski,17:45,18:40,3,2,Business,35,0,booked
 T05123456,123456,303,02-10-2025,Tallinn,Keila,17:45,18:18,1,1,Economy,20,14,cancelled
-T06000000,000000,101,02-10-2025,Tallinn,Kehra,06:15,06:40,3,1,Business,25,0,booked
+T06000000,000000,101,02-10-2025,Tallinn,Kehra,06:15,06:40,3,1,Business,25,24,cancelled
+T07000000,000000,303,03-10-2025,Tallinn,Keila,17:45,18:18,1,1,Economy,20,0,booked
+T08888888,888888,303,01-10-2025,Tallinn,Laagri,17:45,18:05,3,1,Business,25,22,cancelled

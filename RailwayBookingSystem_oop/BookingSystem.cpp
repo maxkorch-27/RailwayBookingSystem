@@ -7,6 +7,7 @@
 #include <sstream>
 #include "InputValidator.h"
 #include "DatabaseManager.h"
+#include "PerformanceTimer.h"
 using namespace std;
 
 BookingSystem::BookingSystem(vector<Train> trains1, const string& customersFile, const string& ticketsFile)
@@ -39,6 +40,7 @@ void BookingSystem::buyTicket(Train& train, Station fromStation, Station toStati
 
 void BookingSystem::searchTickets(string fromStation, string toStation, string date, string coachType)
 {
+
     cout << "=== Available options ===" << endl << endl;
 
     bool anyFound = false;
@@ -98,7 +100,7 @@ void BookingSystem::searchTickets(string fromStation, string toStation, string d
     // If options found, prompt for booking
     if (anyFound) {
         string response = InputValidator::getValidatedInput("Do you want to book a ticket? (yes/no): ",
-            InputValidator::isValidYesNo, "Please enter yes or no!");
+            InputValidator::isValidYesNo, "Please enter 'yes' or 'no'.");
 
         if (response == "yes")
         {
